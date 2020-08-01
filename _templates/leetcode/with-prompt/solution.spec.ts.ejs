@@ -1,0 +1,17 @@
+---
+to: src/<%= problem_name %>/solution.spec.ts
+---
+import * as chai from 'chai'
+
+import <%= function_name %> from './solution'
+
+const assert = chai.assert
+
+describe('solution', async () => {
+  it('should pass edge tests', async () => {
+    assert.equal(<%= function_name %>(), false)
+  })
+  it('should pass tests', async () => {
+    assert.equal(<%= function_name %>(), false)
+  })
+})
