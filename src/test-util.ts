@@ -56,6 +56,7 @@ export class TreeNode<T> {
     while (i < arr.length && level.length !== 0) {
       const next: TreeNode<T>[] = []
       for (const node of level) {
+        if (!node) continue
         node.left = arr[i] ? new TreeNode<T>(arr[i]) : null
         i++
         next.push(node.left)
