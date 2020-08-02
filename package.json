@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "init": "./scripts/init.sh",
-    "start": "./scripts/start.sh"
+    "start": "./scripts/start.sh",
+    "test": "./scripts/test.sh"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

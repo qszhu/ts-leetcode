@@ -48,21 +48,24 @@ export class TreeNode<T> {
 
   static fromArray<T>(arr: T[]): TreeNode<T> {
     if (!arr || arr.length === 0) return null
-    const root = new TreeNode<T>(arr[0])
-    const queue: TreeNode<T>[] = [root]
+
+    let level: TreeNode<T>[] = [new TreeNode<T>(arr[0])]
+    const root = level[0]
+
     let i = 1
-    while (queue.length !== 0) {
-      const node = queue.shift()
-      if (i < arr.length) {
-        if (arr[i]) {
-          node.left = new TreeNode<T>(arr[i++])
-          queue.push(node.left)
-        }
-        if (i < arr.length && arr[i]) {
-          node.right = new TreeNode<T>(arr[i++])
-          queue.push(node.right)
-        }
+    while (i < arr.length && level.length !== 0) {
+      const next: TreeNode<T>[] = []
+      for (const node of level) {
+        node.left = arr[i] ? new TreeNode<T>(arr[i]) : null
+        i++
+        next.push(node.left)
+
+        node.right = arr[i] ? new TreeNode<T>(arr[i]) : null
+        i++
+        next.push(node.right)
       }
+      while (!next[next.length - 1]) next.pop()
+      level = next
     }
     return root
   }
