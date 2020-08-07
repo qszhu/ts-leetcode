@@ -1,0 +1,13 @@
+class {{className}} {
+{{#if constructor}}
+
+  constructor({{constructor.params}}) {
+  }
+{{/if}}
+{{#each methods}}
+
+  {{this.name}}({{this.params}}): {{this.returnType}} {
+    return {{this.defaultReturnValue}}
+  }
+{{/each}}
+}

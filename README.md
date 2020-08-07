@@ -1,45 +1,42 @@
-### TypeScript Env for Online Judge
+### Steps for solving a problem
 
-#### Init problem
+0. Put LeetCode session cookie in `.env`
+
+1. Create a solution for the problem. Provide problem slug (last path segment of url) as argument.
+
 ```bash
-$ npm run init leetcode
-
-✔ What's the name of the problem? · swap-nodes-in-pairs
-✔ What's the name of the function? · swapPairs
-
-Loaded templates: _templates
-       added: src/swap-nodes-in-pairs/solution.spec.ts
-       added: src/swap-nodes-in-pairs/solution.ts
-       added: src/swap-nodes-in-pairs/tsconfig.json
+$ npm run init invert-binary-tree
 ```
 
-#### Run tests
+2. Edit test cases in `questions/invert-binary-tree/input`.
+
+3. Edit solution in `questions/invert-binary-tree/solution.ts`.
+
+4. Run tests.
+
 ```bash
-$ npm start src/swap-nodes-in-pairs
-
-[nodemon] 2.0.4
-[nodemon] to restart at any time, enter `rs`
-[nodemon] watching path(s): src/swap-nodes-in-pairs/**/*
-[nodemon] watching extensions: ts
-
-  solution
-    ✓ should pass edge tests
-    ✓ should pass tests
-
-
-  2 passing (5ms)
-
-[nodemon] clean exit - waiting for changes before restart
+$ npm run test
 ```
 
-* Watches for changes in `src/<path>`, compiles ts and runs tests
-  * `solution.ts`: typescript solution file
-  * `solution.spec.ts`: test file
-  * `solution.js`: submit as javascript
+5. Submit.
 
-#### Options
+```bash
+$ npm run submit
+```
 
-in `.env`
+### Options in `.env`
 
-* `MINIFY`: minify with terser (config: `minify.json`)
-* `OBFUSCATE`: obfuscate with javascript-obfuscator (config: `javascript-obfuscator.json`)
+* `LEETCODE_SESSION`: session cookie after login
+* `QUESTIONS_ROOT_DIR=questions`: root dir for question solutions
+* `MINIFY=false`: minify solutions with `terser`
+  * minify options: `minify.json`
+* `OBFUSCATE=false`: obfuscate solutions with `javascript-obfuscator`
+  * obfuscate options: `javascript-obfuscator.json` 
+
+### Notes
+
+* `npm run init` can be run multiple times to create new solutions to a same questions.
+  * new solutions will be named as `solution2.ts`, `solution3.ts`, etc.
+  * `solution.ts` is a symlink to the latest added solution.
+  * use `npm run select n` to set solution n to current solution, which should be tested and submited.
+* `npm run` commands will use the same problem slug of the prev command if its argument is omitted.
