@@ -1,42 +1,58 @@
-### Steps for solving a problem
-
-0. Put LeetCode session cookie in `.env`
-
-1. Create a solution for the problem. Provide problem slug (last path segment of url) as argument.
+### Install ts-leetcode cli
 
 ```bash
-$ npm run init invert-binary-tree
+$ npm i -g ts-leetcode
+```
+
+### Prepare project
+
+```bash
+$ git clone https://github.com/qszhu/leetcode-ts-template leetcode-ts
+$ cd leetcode-ts
+$ npm i
+$ cp .env.example .env
+```
+
+* Put LeetCode session cookie in `.env`
+
+### Steps for solving a problem
+
+1. Create a solution for the problem. Provide the problem slug (last path segment of the url) as argument. (For example, `invert-binary-tree`)
+
+```bash
+$ tslc init invert-binary-tree
 ```
 
 2. Edit test cases in `questions/invert-binary-tree/input`.
 
 3. Edit solution in `questions/invert-binary-tree/solution.ts`.
 
-4. Run tests.
+4. Build soltuion.
 
 ```bash
-$ npm run test
+$ tslc build invert-binary-tree
 ```
 
-5. Submit.
+5. Run tests.
 
 ```bash
-$ npm run submit
+$ tslc test invert-binary-tree
+```
+
+6. Submit.
+
+```bash
+$ tslc submit invert-binary-tree
 ```
 
 ### Options in `.env`
 
 * `LEETCODE_SESSION`: session cookie after login
-* `QUESTIONS_ROOT_DIR=questions`: root dir for question solutions
-* `MINIFY=false`: minify solutions with `terser`
-  * minify options: `minify.json`
-* `OBFUSCATE=false`: obfuscate solutions with `javascript-obfuscator`
-  * obfuscate options: `javascript-obfuscator.json` 
+* `MODE`: [webpack mode](https://webpack.js.org/configuration/mode/)
 
 ### Notes
 
-* `npm run init` can be run multiple times to create new solutions to a same questions.
+* `tslc init` can be run multiple times to create new solutions for a same question.
   * new solutions will be named as `solution2.ts`, `solution3.ts`, etc.
   * `solution.ts` is a symlink to the latest added solution.
-  * use `npm run select n` to set solution n to current solution, which should be tested and submited.
-* `npm run` commands will use the same problem slug of the prev command if its argument is omitted.
+  * use `tslc select <questionSlug> n` to set solution_n as the current solution, which could then be tested and submited.

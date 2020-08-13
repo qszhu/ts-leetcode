@@ -17,10 +17,8 @@ interface Options {
 }
 
 function getEnvOptions(): Options {
-  const { QUESTIONS_ROOT_DIR } = process.env
-
   return {
-    questionsRootDir: QUESTIONS_ROOT_DIR,
+    questionsRootDir: path.join(process.cwd(), 'questions')
   }
 }
 
@@ -93,6 +91,11 @@ export default class Project {
     if (fs.existsSync(this.testInputFn)) return
 
     await writeFile(this.testInputFn, this.question.sampleTestCase)
+  }
+
+  get libraryName() {
+    const metaData = JSON.parse(this.question.metaData)
+    return metaData.name || metaData.classname
   }
 
   async createCode() {

@@ -1,10 +1,11 @@
 import * as fs from 'fs'
+import * as path from 'path'
 import { promisify } from 'util'
 
 import * as Handlebars from 'handlebars'
 
 export function getTemplate(tmplFn: string) {
-  const tmplStr = fs.readFileSync(tmplFn).toString()
+  const tmplStr = fs.readFileSync(path.join(__dirname, '..', '..', tmplFn)).toString()
   return Handlebars.compile(tmplStr, { noEscape: true })
 }
 

@@ -1,6 +1,4 @@
-import * as globby from 'globby'
-
-import { getTemplate, readFileSync } from './utils'
+import { getTemplate } from './utils'
 
 function getType(type: string): string {
   if (type === 'integer') return 'number'
@@ -71,19 +69,9 @@ function genClass(metaData: any) {
   })
 }
 
-const HR = '\n/******************************************************************************/\n\n'
-
-function getSnippets() {
-  const snippetFns = globby.sync('templates/snippets/*.ts')
-  return snippetFns.map(readFileSync).join(HR)
-}
-
 export function genCode(metaData: any) {
-  let code
   if (metaData.classname) {
-    code = genClass(metaData)
-  } else {
-    code = genFunction(metaData)
+    return genClass(metaData)
   }
-  return `${code}${HR}${getSnippets()}`
+  return genFunction(metaData)
 }
