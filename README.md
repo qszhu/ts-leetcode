@@ -6,9 +6,11 @@ $ npm i -g ts-leetcode
 
 ### Prepare project
 
+* Create project from template https://github.com/qszhu/leetcode-ts-template
+
+* Run command
+
 ```bash
-$ git clone https://github.com/qszhu/leetcode-ts-template leetcode-ts
-$ cd leetcode-ts
 $ npm i
 $ cp .env.example .env
 ```
