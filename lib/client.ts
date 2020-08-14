@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import Config from './config'
+
 function toCookieString(cookieObj: Record<string, unknown>) {
   return Object.keys(cookieObj)
     .map((key) => `${key}=${cookieObj[key]}`)
@@ -65,14 +67,19 @@ export interface CheckSubmissionResp extends CheckResp {
   last_testcase: string
 }
 
-const { LEETCODE_SESSION } = process.env
-
 export class Client {
+  private config: Config
+
   constructor(
-    private session = LEETCODE_SESSION,
+    private session?: string,
     private host = 'https://leetcode-cn.com',
     private checkResultInterval = 1000
-  ) {}
+  ) {
+    this.config = Config.load()
+    if (!this.session) {
+      this.session = this.config.leetcodeSession
+    }
+  }
 
   private get cookie() {
     return toCookieString({ LEETCODE_SESSION: this.session })
