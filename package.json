@@ -1,6 +1,6 @@
 {
   "name": "ts-leetcode",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "bin": {
     "tslc": "./dist/src/tslc.js"
   },
@@ -26,6 +26,6 @@
     "typescript": "^3.9.7"
   },
   "engines": {
-    "node": ">10"
+    "node": ">=10"
   }
 }
