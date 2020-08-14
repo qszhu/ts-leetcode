@@ -1,3 +1,9 @@
+### Features
+* Works on `leetcode-cn.com`
+* `TypeScript` project template
+* `Local` test data
+* Stores `multiple solutions` to a single question
+
 ### Install ts-leetcode cli
 
 ```bash
@@ -12,10 +18,10 @@ $ npm i -g ts-leetcode
 
 ```bash
 $ npm i
-$ cp .env.example .env
+$ mv .tslcrc.example .tslcrc
 ```
 
-* Put LeetCode session cookie in `.env`
+* Put LeetCode session cookie in `.tslcrc`
 
 ### Steps for solving a problem
 
@@ -32,29 +38,30 @@ $ tslc init invert-binary-tree
 4. Build soltuion.
 
 ```bash
-$ tslc build invert-binary-tree
+$ tslc build
 ```
 
 5. Run tests.
 
 ```bash
-$ tslc test invert-binary-tree
+$ tslc test
 ```
 
 6. Submit.
 
 ```bash
-$ tslc submit invert-binary-tree
+$ tslc submit
 ```
 
-### Options in `.env`
+### Options in `.tslcrc`
 
-* `LEETCODE_SESSION`: session cookie after login
-* `MODE`: [webpack mode](https://webpack.js.org/configuration/mode/)
+* `leetcodeSession`: session cookie after login
+* `mode`: [webpack mode](https://webpack.js.org/configuration/mode/)
 
 ### Notes
 
 * `tslc init` can be run multiple times to create new solutions for a same question.
   * new solutions will be named as `solution2.ts`, `solution3.ts`, etc.
   * `solution.ts` is a symlink to the latest added solution.
-  * use `tslc select <questionSlug> n` to set solution_n as the current solution, which could then be tested and submited.
+  * use `tslc select n [questionSlug]` to set solution_n as the current solution, which could then be tested and submited.
+* if `questionSlug` is not provided for the current command, last `questionSlug` used in previous commands will be used.
