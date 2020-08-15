@@ -1,67 +1,101 @@
-### Features
-* Works on `leetcode-cn.com`
-* `TypeScript` project template
-* `Local` test data
-* Stores `multiple solutions` to a single question
+## LeetCode TypeScript 解题工具
 
-### Install ts-leetcode cli
+### 特性
+* 针对`leetcode-cn.com`开发
+* 提供`TypeScript`工程模版，支持自定义
+* 使用本地测试数据
+* 支持同一个问题的多个解答，可随时切换
+
+### 运行需求
+
+* Node.js v10+
+* 仅在Mac OSX下测试过
+
+### 安装
 
 ```bash
 $ npm i -g ts-leetcode
 ```
 
-### Prepare project
+### 初始化工程
 
-* Create project from template https://github.com/qszhu/leetcode-ts-template
+* 由[leetcode-ts-template](https://github.com/qszhu/leetcode-ts-template)模版创建工程并clone到本地
 
-* Run command
+* 在工程根目录运行以下命令：
 
 ```bash
 $ npm i
 $ mv .tslcrc.example .tslcrc
 ```
 
-* Put LeetCode session cookie in `.tslcrc`
+* 将`LeetCode` session cookie放入`.tslcrc`。[如何找到cookie？](docs/cookie.md)
 
-### Steps for solving a problem
+### 解题步骤
 
-1. Create a solution for the problem. Provide the problem slug (last path segment of the url) as argument. (For example, `invert-binary-tree`)
+1. 创建解答目录
 
 ```bash
 $ tslc init invert-binary-tree
 ```
 
-2. Edit test cases in `questions/invert-binary-tree/input`.
+需提供题目的短标题作为参数。例如题目的url为`https://leetcode-cn.com/problems/invert-binary-tree/`，则题目的短标题为url路径的最后一部分`invert-binary-tree`
 
-3. Edit solution in `questions/invert-binary-tree/solution.ts`.
+若第一次运行，此命令会创建如下目录结构：
 
-4. Build soltuion.
+```
+questions/invert-binary-tree
+├── input
+├── solution.ts -> solution1.ts
+├── solution1.ts
+└── tsconfig.json
+```
+
+2. 编辑`input`中的测试数据
+
+3. 编辑`solution.ts`中的代码
+
+4. 编译
 
 ```bash
 $ tslc build
+Hash: f5834e34f10e512f08a5
+Version: webpack 4.44.1
+Time: 1235ms
+Built at: 2020-08-15 11:46:53 AM
+      Asset      Size  Chunks             Chunk Names
+solution.js  7.03 KiB       0  [emitted]  main
+Entrypoint main = solution.js
+[0] ./questions/invert-binary-tree/solution1.ts 868 bytes {0} [built]
 ```
 
-5. Run tests.
+5. 测试
 
 ```bash
 $ tslc test
+STARTED
+STARTED
+SUCCESS
 ```
 
-6. Submit.
+6. 提交
 
 ```bash
 $ tslc submit
+STARTED
+Accepted
+Runtime: 84 ms, 32.27%
+Memory: 40 MB, 5.12%
 ```
 
-### Options in `.tslcrc`
+### 配置`.tslcrc`
 
-* `leetcodeSession`: session cookie after login
+* `leetcodeSession`: 登录后的session cookie
 * `mode`: [webpack mode](https://webpack.js.org/configuration/mode/)
 
-### Notes
+### 备注
 
-* `tslc init` can be run multiple times to create new solutions for a same question.
-  * new solutions will be named as `solution2.ts`, `solution3.ts`, etc.
-  * `solution.ts` is a symlink to the latest added solution.
-  * use `tslc select n [questionSlug]` to set solution_n as the current solution, which could then be tested and submited.
-* if `questionSlug` is not provided for the current command, last `questionSlug` used in previous commands will be used.
+* `tslc init`可以被多次运行，每次运行会新增一个解答文件
+  * 新文件按照`solution2.ts`, `solution3.ts`的顺序命名
+  * `solution.ts`是指向最新解答文件的软链接，是后续构建测试和提交的输入文件
+  * `tslc select <n> [questionSlug]`会将软链接指向`solution<n>.ts`
+* 如果未向命令行提供题目短标题，则会使用最近一次命令中使用过的短标题
