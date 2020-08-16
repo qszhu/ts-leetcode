@@ -11,6 +11,7 @@
 ### 运行需求
 
 * Node.js v10+
+* Google Chrome
 * 仅在Mac OSX下测试过
 
 ### 安装
@@ -30,7 +31,17 @@ $ npm i
 $ mv .tslcrc.example .tslcrc
 ```
 
-* 将`LeetCode` session cookie放入`.tslcrc`。[如何找到cookie？](docs/cookie.md)
+* 根据需要调整`.tslcrc`中`browserPath`的值为Google Chrome浏览器路径
+
+* 登录（用户名和密码会被直接发送到leetcode网站，不会被保存到本地或其他地方）：
+
+```bash
+$ tslc login
+✔ Username: · xxxxxxxx
+✔ Password: · ********
+Logging in, this may take some time...
+Success!
+```
 
 ### 解题步骤
 
@@ -91,7 +102,7 @@ Memory: 40 MB, 5.12%
 
 ### 配置`.tslcrc`
 
-* `leetcodeSession`: 登录后的session cookie
+* `browserPath`: Google Chrome浏览器路径
 * `mode`: [webpack mode](https://webpack.js.org/configuration/mode/)
 
 ### 备注
