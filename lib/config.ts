@@ -7,6 +7,7 @@ const CONFIG_FN = '.tslcrc'
 const KEY_LEETCODE_SESSION = 'leetcodeSession'
 const KEY_MODE = 'mode'
 const KEY_CURRENT_TITLE_SLUG = 'currentTitleSlug'
+const KEY_PUPPETEER_BROWSER_PATH = 'browserPath'
 
 function getConfigFn() {
   return path.join(process.cwd(), CONFIG_FN)
@@ -47,6 +48,15 @@ export default class Config {
 
   set mode(mode: string) {
     this.data[KEY_MODE] = mode
+    this.save()
+  }
+
+  get browserPath() {
+    return this.data[KEY_PUPPETEER_BROWSER_PATH]
+  }
+
+  set browserPath(path: string) {
+    this.data[KEY_PUPPETEER_BROWSER_PATH] = path
     this.save()
   }
 

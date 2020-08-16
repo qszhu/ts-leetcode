@@ -1,6 +1,9 @@
 import axios from 'axios'
+import * as puppeteer from 'puppeteer-core'
 
 import Config from './config'
+
+const SESSION_COOKIE_NAME = 'LEETCODE_SESSION'
 
 function toCookieString(cookieObj: Record<string, unknown>) {
   return Object.keys(cookieObj)
@@ -81,8 +84,62 @@ export class Client {
     }
   }
 
+  async loginWithPassword(username: string, password: string) {
+    const browser = await puppeteer.launch({
+      slowMo: 100,
+      executablePath: this.config.browserPath,
+    })
+
+    const page = await browser.newPage()
+    await page.goto(this.host)
+
+    // crucial: remove webdriver property
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, 'webdriver', {
+        get: () => false,
+      })
+    })
+
+    // click "sign in with password"
+    const signInWithPasswordSel = 'div[data-cypress=sign-in-with-password]'
+    await page.waitForSelector(signInWithPasswordSel)
+    await page.click(signInWithPasswordSel)
+
+    // type username
+    const usernameSel = 'input[autocomplete=username]'
+    await page.waitForSelector(usernameSel)
+    await page.type(usernameSel, username, { delay: 250 })
+
+    // type password
+    const passwordSel = 'input[autocomplete=password]'
+    await page.waitForSelector(passwordSel)
+    await page.type(passwordSel, password, { delay: 250 })
+
+    // click login button
+    const loginSel = 'button[type=submit]'
+    await page.waitForSelector(loginSel)
+    await page.click(loginSel)
+
+    await page.waitForNavigation()
+    const cookies = await page.cookies()
+    await browser.close()
+
+    let session = null
+    for (const cookie of cookies) {
+      if (cookie.name === SESSION_COOKIE_NAME) {
+        session = cookie.value
+        break
+      }
+    }
+
+    if (!session) throw new Error('session cookie not found')
+    this.config.leetcodeSession = session
+  }
+
   private get cookie() {
-    return toCookieString({ LEETCODE_SESSION: this.session })
+    const cookies: any = {}
+    cookies[SESSION_COOKIE_NAME] = this.session
+    return toCookieString(cookies)
   }
 
   async getQuestionData(titleSlug: string): Promise<QuestionDataResp> {

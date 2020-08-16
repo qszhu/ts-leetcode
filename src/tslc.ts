@@ -2,6 +2,7 @@
 
 import pkg = require('../package.json')
 import * as commander from 'commander'
+import { prompt } from 'enquirer'
 
 import { Client } from '../lib/client'
 import { init } from './init'
@@ -12,6 +13,24 @@ import { submit } from './submit'
 import { loadTitleSlug } from './util'
 
 const client = new Client()
+
+async function loginCmd() {
+  const { username, password } = await prompt([
+    {
+      type: 'input',
+      name: 'username',
+      message: 'Username:',
+    },
+    {
+      type: 'password',
+      name: 'password',
+      message: 'Password:',
+    },
+  ])
+  console.log('Logging in, this may take some time...')
+  await client.loginWithPassword(username, password)
+  console.log('Success!')
+}
 
 async function initCmd(titleSlug?: string) {
   titleSlug = loadTitleSlug(titleSlug)
@@ -41,6 +60,7 @@ async function submitCmd(titleSlug?: string) {
 async function main() {
   const program = new commander.Command()
   program.version(pkg.version)
+  program.command('login').description('login with username and password').action(loginCmd)
   program
     .command('init [questionSlug]')
     .description('create new solution for question')
