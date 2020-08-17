@@ -1,4 +1,4 @@
-背景和开发过程见此[博文](https://qszhu.github.io/2020/08/15/leetcode-with-typescript.html)
+背景和开发过程见此[博文](https://qszhu.github.io/2020/08/16/leetcode-with-typescript.html)
 
 ## LeetCode TypeScript 解题工具
 
