@@ -1,6 +1,6 @@
 {
   "name": "ts-leetcode",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "bin": {
     "tslc": "./dist/src/tslc.js"
   },
@@ -14,10 +14,12 @@
     "enquirer": "^2.3.6",
     "globby": "^11.0.1",
     "handlebars": "^4.7.6",
+    "html-to-text": "^5.1.1",
     "puppeteer-core": "^5.2.1",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
+    "@types/html-to-text": "^5.1.1",
     "@types/node": "^14.0.27",
     "@types/puppeteer-core": "^2.0.0",
     "@types/shelljs": "^0.8.8",

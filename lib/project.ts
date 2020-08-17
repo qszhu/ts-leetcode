@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import * as shell from 'shelljs'
 import * as globby from 'globby'
 
-import { Client, QuestionDataResp } from './client'
+import { Client, QuestionData } from './client'
 import { getTemplate, readFileSync, writeFile } from './utils'
 import { genCode } from './codeGen'
 
@@ -18,13 +18,13 @@ interface Options {
 
 function getEnvOptions(): Options {
   return {
-    questionsRootDir: path.join(process.cwd(), 'questions')
+    questionsRootDir: path.join(process.cwd(), 'questions'),
   }
 }
 
 export default class Project {
   private options: Options
-  private question: QuestionDataResp['data']['question']
+  private question: QuestionData
 
   constructor(private titleSlug: string, private client: Client, options?: Options) {
     this.options = Object.assign(getEnvOptions(), options)
@@ -102,8 +102,7 @@ export default class Project {
     const next = this.nextNumber()
     const codeFn = this.addNumber(this.codeFn, next)
 
-    const metaData = JSON.parse(this.question.metaData)
-    const code = genCode(metaData)
+    const code = genCode(this.question)
     await writeFile(codeFn, code)
     this.selectCode(next)
   }

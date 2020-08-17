@@ -1,4 +1,7 @@
+import * as htmlToText from 'html-to-text'
+
 import { getTemplate } from './utils'
+import { QuestionData } from './client'
 
 function getType(type: string): string {
   if (type === 'integer') return 'number'
@@ -21,7 +24,7 @@ function getTypeDefaultValue(type: string) {
   return 'null'
 }
 
-function genFunction(metaData: any) {
+function genFunction(metaData: any, questionDesc: string) {
   const tmpl = getTemplate('templates/function.hbs')
 
   const functionName = metaData.name
@@ -34,10 +37,11 @@ function genFunction(metaData: any) {
     parameters,
     returnType,
     defaultReturnValue,
+    questionDesc,
   })
 }
 
-function genClass(metaData: any) {
+function genClass(metaData: any, questionDesc: string) {
   const tmpl = getTemplate('templates/class.hbs')
 
   const className = metaData.classname
@@ -66,12 +70,30 @@ function genClass(metaData: any) {
     className,
     constructor,
     methods,
+    questionDesc,
   })
 }
 
-export function genCode(metaData: any) {
+function genQuestionDescription(question: QuestionData) {
+  const tmpl = getTemplate('templates/question.hbs')
+
+  const title = question.title || question.translatedTitle
+  const difficulty = question.difficulty
+  const wordwrap = question.content ? 80 : 40
+  const content = htmlToText.fromString(question.content || question.translatedContent, {
+    wordwrap,
+    longWordSplit: { wrapCharacters: [], forceWrapOnLimit: true },
+  })
+
+  return tmpl({ title, content, difficulty })
+}
+
+export function genCode(question: QuestionData) {
+  const metaData = JSON.parse(question.metaData)
+  const desc = genQuestionDescription(question)
+
   if (metaData.classname) {
-    return genClass(metaData)
+    return genClass(metaData, desc)
   }
-  return genFunction(metaData)
+  return genFunction(metaData, desc)
 }

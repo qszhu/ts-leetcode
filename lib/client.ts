@@ -11,19 +11,23 @@ function toCookieString(cookieObj: Record<string, unknown>) {
     .join('; ')
 }
 
-export interface QuestionDataResp {
+export interface QuestionData {
+  questionId: string
+  title: string
+  titleSlug: string
+  translatedTitle: string
+  translatedContent: string
+  content: string
+  difficulty: string
+  sampleTestCase: string
+  metaData: string
+  judgerAvailable: boolean
+  judgeType: string
+}
+
+interface QuestionDataResp {
   data: {
-    question: {
-      questionId: string
-      title: string
-      titleSlug: string
-      content: string
-      difficulty: string
-      sampleTestCase: string
-      metaData: string
-      judgerAvailable: boolean
-      judgeType: string
-    }
+    question: QuestionData
   }
 }
 
@@ -158,6 +162,8 @@ export class Client {
         '    questionId',
         '    title',
         '    titleSlug',
+        '    translatedTitle',
+        '    translatedContent',
         '    content',
         '    difficulty',
         '    sampleTestCase',
