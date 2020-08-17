@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import pkg = require('../package.json')
 import * as commander from 'commander'
-import { prompt } from 'enquirer'
 
 import { Client } from '../lib/client'
 import { init } from './init'
@@ -10,26 +8,16 @@ import { select } from './select'
 import { build } from './build'
 import { test } from './test'
 import { submit } from './submit'
+import { login } from './login'
+import { upgrade } from './upgrade'
 import { loadTitleSlug } from './util'
+
+import pkg = require('../package.json')
 
 const client = new Client()
 
 async function loginCmd() {
-  const { username, password } = await prompt([
-    {
-      type: 'input',
-      name: 'username',
-      message: 'Username:',
-    },
-    {
-      type: 'password',
-      name: 'password',
-      message: 'Password:',
-    },
-  ])
-  console.log('Logging in, this may take some time...')
-  await client.loginWithPassword(username, password)
-  console.log('Success!')
+  await login(client)
 }
 
 async function initCmd(titleSlug?: string) {
@@ -57,6 +45,10 @@ async function submitCmd(titleSlug?: string) {
   await submit(titleSlug, client)
 }
 
+async function upgradeCmd() {
+  await upgrade()
+}
+
 async function main() {
   const program = new commander.Command()
   program.version(pkg.version)
@@ -78,6 +70,7 @@ async function main() {
     .command('submit [questionSlug]')
     .description('submit solution for question')
     .action(submitCmd)
+  program.command('upgrade').description('upgrade self').action(upgradeCmd)
   program.parse(process.argv)
 }
 
