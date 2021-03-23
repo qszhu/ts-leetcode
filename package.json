@@ -9,7 +9,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "commander": "^6.0.0",
     "enquirer": "^2.3.6",
     "globby": "^11.0.1",
