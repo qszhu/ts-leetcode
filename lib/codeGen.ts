@@ -29,7 +29,7 @@ function genFunction(metaData: any, questionDesc: string) {
 
   const functionName = metaData.name
   const parameters = getParams(metaData.params)
-  const returnType = getType(metaData.return.type)
+  const returnType = metaData.return ? getType(metaData.return.type) : 'unknown'
   const defaultReturnValue = getTypeDefaultValue(returnType)
 
   return tmpl({

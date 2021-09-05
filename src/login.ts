@@ -3,7 +3,7 @@ import { prompt } from 'enquirer'
 import { Client } from '../lib/client'
 
 export async function login(client: Client) {
-  const { username, password } = await prompt([
+  const { username, password } = await prompt<any>([
     {
       type: 'input',
       name: 'username',
