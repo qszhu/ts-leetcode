@@ -4,7 +4,7 @@ import { getTemplate } from './utils'
 import { QuestionData } from './client'
 
 function getType(type: string): string {
-  if (type === 'integer') return 'number'
+  if (type === 'integer' || type === 'double') return 'number'
   if (type === 'character') return 'string'
   if (type.match(/(.+)\[\]/) || type.match(/list<(.+)>/)) {
     return `${getType(RegExp.$1)}[]`
