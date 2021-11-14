@@ -1,12 +1,11 @@
 {
   "name": "ts-leetcode",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "bin": {
     "tslc": "./dist/src/tslc.js"
   },
   "scripts": {
-    "build": "del dist && tsc",
-    "prepare": "npm run build"
+    "build": "del dist && tsc"
   },
   "dependencies": {
     "axios": "^0.21.1",
