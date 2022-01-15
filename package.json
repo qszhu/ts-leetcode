@@ -15,7 +15,7 @@
     "handlebars": "^4.7.7",
     "html-to-text": "^5.1.1",
     "puppeteer-core": "^5.2.1",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@types/html-to-text": "^5.1.1",
