@@ -15,7 +15,7 @@
     "handlebars": "^4.7.7",
     "html-to-text": "^5.1.1",
     "puppeteer-core": "^5.2.1",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@types/html-to-text": "^5.1.1",
@@ -25,7 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "@typescript-eslint/parser": "^3.8.0",
     "del-cli": "^3.0.1",
-    "eslint": "^7.6.0",
+    "eslint": "^8.10.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
