@@ -79,7 +79,7 @@ export class Client {
 
   constructor(
     private session?: string,
-    private host = 'https://leetcode-cn.com',
+    private host = 'https://leetcode.cn',
     private checkResultInterval = 1000
   ) {
     this.config = Config.load()
