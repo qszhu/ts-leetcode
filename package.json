@@ -1,6 +1,6 @@
 {
   "name": "ts-leetcode",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "bin": {
     "tslc": "./dist/src/tslc.js"
   },

@@ -1,14 +1,14 @@
-import * as path from 'path'
 import * as fs from 'fs'
+import * as path from 'path'
 
-import * as shell from 'shelljs'
 import * as globby from 'globby'
+import * as shell from 'shelljs'
 
 import { Client, QuestionData } from './client'
-import { getTemplate, readFileSync, writeFile } from './utils'
 import { genCode } from './codeGen'
+import { readFileSync, writeFile } from './utils'
 
-const CODE_FN = 'solution.ts'
+const CODE_FN = 'solution.nim'
 const SOLUTION_FN = 'solution.js'
 const TEST_INPUT_FN = 'input'
 
@@ -59,14 +59,14 @@ export default class Project {
   }
 
   private getNumber(fn: string) {
-    if (fn.match(/solution(\d+).ts$/)) {
+    if (fn.match(/solution(\d+).nim$/)) {
       return Number(RegExp.$1)
     }
     return 0
   }
 
   private nextNumber() {
-    const fns = globby.sync(`${this.questionDir}/solution*.ts`)
+    const fns = globby.sync(`${this.questionDir}/solution*.nim`)
     if (fns.length === 0) return 1
     return Math.max(...fns.map((fn) => this.getNumber(fn))) + 1
   }
@@ -77,10 +77,6 @@ export default class Project {
 
   get solutionFn() {
     return path.join(this.questionDir, SOLUTION_FN)
-  }
-
-  get tsconfigFn() {
-    return path.join(this.questionDir, 'tsconfig.json')
   }
 
   createQuestionDir() {
@@ -110,14 +106,6 @@ export default class Project {
   selectCode(n: number) {
     const codeFn = this.addNumber(this.codeFn, n)
     shell.ln('-sf', path.basename(codeFn), this.codeFn)
-  }
-
-  async createTsConfig() {
-    if (fs.existsSync(this.tsconfigFn)) return
-
-    const tmpl = getTemplate('templates/tsconfig.json.hbs')
-    const tsconfig = tmpl({ codeFn: CODE_FN })
-    await writeFile(this.tsconfigFn, tsconfig)
   }
 
   async test() {

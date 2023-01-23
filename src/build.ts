@@ -1,12 +1,12 @@
-import * as path from 'path'
-
 import * as shell from 'shelljs'
 
 import { Client } from '../lib/client'
 import Project from '../lib/project'
-import Config from '../lib/config'
+
+// const TARGET = 'node16.13.2'
 
 function run(cmd: string) {
+  console.log(cmd)
   const res = shell.exec(cmd)
   if (res.code !== 0) {
     shell.exit(res.code)
@@ -14,14 +14,10 @@ function run(cmd: string) {
 }
 
 export async function build(titleSlug: string, client: Client) {
-  const config = Config.load()
-  const mode = config.mode
-
   const project = new Project(titleSlug, client)
+  run(`nim js -d:nodejs -d:danger -o:${project.solutionFn} ${project.codeFn}`)
 
-  await project.readQuestion()
+  // await project.readQuestion()
 
-  const configFn = path.join(process.cwd(), 'webpack.config.js')
-  const cmd = `npx webpack --config=${configFn} --mode=${mode} --env.dir=${project.questionDir} --env.library=${project.libraryName}`
-  run(cmd)
+  // run(`esbuild ${project.solutionFn} --bundle --minify-syntax --platform=node --target=${TARGET} --outfile=${project.solutionFn} --allow-overwrite`)
 }

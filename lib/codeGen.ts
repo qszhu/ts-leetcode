@@ -1,13 +1,15 @@
 import * as htmlToText from 'html-to-text'
 
-import { getTemplate } from './utils'
 import { QuestionData } from './client'
+import { getTemplate } from './utils'
 
 function getType(type: string): string {
-  if (type === 'integer' || type === 'double' || type === 'long') return 'number'
-  if (type === 'character') return 'string'
+  if (type === 'integer' || type === 'double' || type === 'long') return 'cdouble'
+  if (type === 'character') return 'cchar'
+  if (type === 'string') return 'cstring'
+  if (type === 'boolean') return 'bool'
   if (type.match(/(.+)\[\]/) || type.match(/list<(.+)>/)) {
-    return `${getType(RegExp.$1)}[]`
+    return `seq[${getType(RegExp.$1)}]`
   }
   return type
 }
@@ -17,11 +19,11 @@ function getParams(params: { name: string; type: string }[]): string {
 }
 
 function getTypeDefaultValue(type: string) {
-  if (type === 'string') return "''"
-  if (type === 'number') return '0'
-  if (type === 'boolean') return 'false'
+  if (type === 'cstring') return `""`
+  if (type === 'cdouble') return '0'
+  if (type === 'bool') return 'false'
   if (type.endsWith('[]')) return '[]'
-  return 'null'
+  return 'nil'
 }
 
 function genFunction(metaData: any, questionDesc: string) {

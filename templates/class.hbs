@@ -1,18 +1,26 @@
 {{questionDesc}}
-///<reference types="../../typings" />
 
-class {{className}} {
+import
+  algorithm,
+  jsre,
+  math,
+  macros,
+  sequtils,
+  sets,
+  strformat,
+  strutils,
+  sugar,
+  tables
+
+type
+  {{className}} = object
+
 {{#if constructor}}
-
-  constructor({{constructor.params}}) {
-  }
+proc {{className}}({{constructor.params}}) =
+  discard
 {{/if}}
+
 {{#each methods}}
-
-  {{this.name}}({{this.params}}): {{this.returnType}} {
-    return {{this.defaultReturnValue}}
-  }
+proc {{this.name}}({{this.params}}): {{this.returnType}} {.exportc.} =
+  {{this.defaultReturnValue}}
 {{/each}}
-}
-
-export default {{className}}

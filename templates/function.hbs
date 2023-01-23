@@ -1,8 +1,34 @@
 {{questionDesc}}
-///<reference types="../../typings" />
 
-const {{functionName}} = ({{parameters}}): {{returnType}} => {
-  return {{defaultReturnValue}}
-}
+import std/[
+  algorithm,
+  bitops,
+  jsconsole,
+  jsre,
+  math,
+  macros,
+  sequtils,
+  strformat,
+  strutils,
+  sugar,
+]
 
-export default {{functionName}}
+type
+  ListNode = ref object
+    val: cdouble
+    next: ListNode
+
+  TreeNode = ref object
+    val: cdouble
+    left, right: TreeNode
+
+  NaryTreeNode = ref object
+    val: cdouble
+    children: seq[NaryTreeNode]
+
+  GraphNode = ref object
+    val: cdouble
+    neighbors: seq[GraphNode]
+
+proc {{functionName}}({{parameters}}): {{returnType}} {.exportc.} =
+  {{defaultReturnValue}}
