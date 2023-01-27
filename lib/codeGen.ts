@@ -4,8 +4,8 @@ import { QuestionData } from './client'
 import { getTemplate } from './utils'
 
 function getType(type: string): string {
-  if (type === 'integer' || type === 'double' || type === 'long') return 'cdouble'
-  if (type === 'character') return 'cchar'
+  if (type === 'integer' || type === 'double' || type === 'long') return 'int'
+  if (type === 'character') return 'cstring'
   if (type === 'string') return 'cstring'
   if (type === 'boolean') return 'bool'
   if (type.match(/(.+)\[\]/) || type.match(/list<(.+)>/)) {
@@ -20,9 +20,9 @@ function getParams(params: { name: string; type: string }[]): string {
 
 function getTypeDefaultValue(type: string) {
   if (type === 'cstring') return `""`
-  if (type === 'cdouble') return '0'
+  if (type === 'int') return '0'
   if (type === 'bool') return 'false'
-  if (type.endsWith('[]')) return '[]'
+  if (type.endsWith('[]')) return '@[]'
   return 'nil'
 }
 
