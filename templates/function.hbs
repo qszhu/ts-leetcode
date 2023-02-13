@@ -3,6 +3,7 @@
 import std/[
   algorithm,
   bitops,
+  cstrutils,
   deques,
   heapqueue,
   jsconsole,
@@ -15,22 +16,7 @@ import std/[
   sugar,
 ]
 
-type
-  ListNode = ref object
-    val: cdouble
-    next: ListNode
-
-  TreeNode = ref object
-    val: cdouble
-    left, right: TreeNode
-
-  NaryTreeNode = ref object
-    val: cdouble
-    children: seq[NaryTreeNode]
-
-  GraphNode = ref object
-    val: cdouble
-    neighbors: seq[GraphNode]
+import types
 
 proc {{functionName}}({{parameters}}): {{returnType}} {.exportc.} =
   {{defaultReturnValue}}

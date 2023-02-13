@@ -1,26 +1,33 @@
 {{questionDesc}}
 
-import
+import std/[
   algorithm,
+  bitops,
+  cstrutils,
+  deques,
+  heapqueue,
+  jsconsole,
   jsre,
   math,
   macros,
   sequtils,
-  sets,
   strformat,
   strutils,
   sugar,
-  tables
+]
 
-type
-  {{className}} = object
+type {{className}} = ref object
 
 {{#if constructor}}
-proc {{className}}({{constructor.params}}) =
-  discard
+proc create{{className}}({{constructor.params}}): {{className}} {.exportc: "{{className}}".} =
+  var this {.importc, nodecl.}: {{className}}
+  this
 {{/if}}
 
 {{#each methods}}
-proc {{this.name}}({{this.params}}): {{this.returnType}} {.exportc.} =
-  {{this.defaultReturnValue}}
+{.emit: "{{className}}.prototype.{{name}} = {{name}}".}
+proc {{name}}({{params}}): {{returnType}} {.exportc.} =
+  var this {.importc, nodecl.}: {{className}}
+  {{defaultReturnValue}}
+
 {{/each}}

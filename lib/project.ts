@@ -9,6 +9,7 @@ import { genCode } from './codeGen'
 import { readFileSync, writeFile } from './utils'
 
 const CODE_FN = 'solution.nim'
+const TYPES_FN = 'types.nim'
 const SOLUTION_FN = 'solution.js'
 const TEST_INPUT_FN = 'input'
 
@@ -51,6 +52,10 @@ export default class Project {
 
   get codeFn() {
     return path.join(this.questionDir, CODE_FN)
+  }
+
+  get typesFn() {
+    return path.join(this.questionDir, TYPES_FN)
   }
 
   private addNumber(fn: string, n: number) {
@@ -101,6 +106,11 @@ export default class Project {
     const code = genCode(this.question)
     await writeFile(codeFn, code)
     this.selectCode(next)
+  }
+
+  async linkLib() {
+    if (fs.existsSync(this.typesFn)) return
+    shell.ln('-sf', '../../types.nim', this.typesFn)
   }
 
   selectCode(n: number) {

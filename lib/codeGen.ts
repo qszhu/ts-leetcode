@@ -23,7 +23,7 @@ function getTypeDefaultValue(type: string) {
   if (type === 'int') return '0'
   if (type === 'bool') return 'false'
   if (type.endsWith('[]')) return '@[]'
-  return 'nil'
+  return ''
 }
 
 function genFunction(metaData: any, questionDesc: string) {
@@ -65,6 +65,7 @@ function genClass(metaData: any, questionDesc: string) {
       params,
       returnType,
       defaultReturnValue,
+      className,
     }
   })
 

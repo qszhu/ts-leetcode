@@ -8,4 +8,5 @@ export async function init(titleSlug: string, client: Client) {
   await project.readQuestion()
   await project.createTestInput()
   await project.createCode()
+  await project.linkLib()
 }
