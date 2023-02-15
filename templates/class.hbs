@@ -17,17 +17,30 @@ import std/[
 ]
 
 type {{className}} = ref object
+  # fields
 
 {{#if constructor}}
-proc create{{className}}({{constructor.params}}): {{className}} {.exportc: "{{className}}".} =
+proc new{{className}}({{constructor.params}}): {{className}} {.exportc: "{{className}}".} =
   var this {.importc, nodecl.}: {{className}}
+
+  # init fields
+
   this
 {{/if}}
 
+
+{{#each methods}}
+proc {{name}}(this: {{className}}, {{params}}): {{returnType}} =
+  {{defaultReturnValue}}
+
+{{/each}}
+
+
+# js wrappers
 {{#each methods}}
 {.emit: "{{className}}.prototype.{{name}} = {{name}}".}
-proc {{name}}({{params}}): {{returnType}} {.exportc.} =
+proc {{name}}Js({{params}}): {{returnType}} {.exportc: "{{name}}".} =
   var this {.importc, nodecl.}: {{className}}
-  {{defaultReturnValue}}
+  this.{{name}}({{paramNames}})
 
 {{/each}}

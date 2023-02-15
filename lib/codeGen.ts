@@ -18,6 +18,10 @@ function getParams(params: { name: string; type: string }[]): string {
   return params.map(({ name, type }) => `${name}: ${getType(type)}`).join(', ')
 }
 
+function getParamNames(params: { name: string; type: string }[]): string {
+  return params.map(({ name }) => name).join(', ')
+}
+
 function getTypeDefaultValue(type: string) {
   if (type === 'cstring') return `""`
   if (type === 'int') return '0'
@@ -58,11 +62,13 @@ function genClass(metaData: any, questionDesc: string) {
   const methods = metaData.methods.map((method: any) => {
     const name = method.name
     const params = getParams(method.params)
+    const paramNames = getParamNames(method.params)
     const returnType = getType(method.return.type)
     const defaultReturnValue = getTypeDefaultValue(returnType)
     return {
       name,
       params,
+      paramNames,
       returnType,
       defaultReturnValue,
       className,
