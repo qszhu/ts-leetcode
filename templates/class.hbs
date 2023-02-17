@@ -6,6 +6,7 @@ import std/[
   cstrutils,
   deques,
   heapqueue,
+  jsbigints,
   jsconsole,
   jsre,
   math,
@@ -15,6 +16,8 @@ import std/[
   strutils,
   sugar,
 ]
+
+import types
 
 type {{className}} = ref object
   # fields
@@ -30,7 +33,7 @@ proc new{{className}}({{constructor.params}}): {{className}} {.exportc: "{{class
 
 
 {{#each methods}}
-proc {{name}}(this: {{className}}, {{params}}): {{returnType}} =
+proc {{name}}(this: {{className}}{{#if params}}, {{params}}{{/if}}): {{returnType}} =
   {{defaultReturnValue}}
 
 {{/each}}
