@@ -1,3 +1,4 @@
+import { run } from './util'
 import { Client } from '../lib/client'
 import Project from '../lib/project'
 
@@ -9,4 +10,5 @@ export async function init(titleSlug: string, client: Client) {
   await project.createTestInput()
   await project.createCode()
   await project.linkLib()
+  run(`code ${project.codeFn}`)
 }

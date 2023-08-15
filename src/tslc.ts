@@ -10,7 +10,7 @@ import { test } from './test'
 import { submit } from './submit'
 import { login } from './login'
 import { upgrade } from './upgrade'
-import { loadTitleSlug } from './util'
+import { loadTitleSlug, titleSlugFromUrl } from './util'
 
 import pkg = require('../package.json')
 
@@ -21,6 +21,9 @@ async function loginCmd() {
 }
 
 async function initCmd(titleSlug?: string) {
+  if (titleSlug.startsWith('http')) {
+    titleSlug = titleSlugFromUrl(titleSlug)
+  }
   titleSlug = loadTitleSlug(titleSlug)
   await init(titleSlug, client)
 }

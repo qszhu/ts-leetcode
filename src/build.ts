@@ -1,17 +1,8 @@
-import * as shell from 'shelljs'
-
+import { run } from './util'
 import { Client } from '../lib/client'
 import Project from '../lib/project'
 
 // const TARGET = 'node16.13.2'
-
-function run(cmd: string) {
-  console.log(cmd)
-  const res = shell.exec(cmd)
-  if (res.code !== 0) {
-    shell.exit(res.code)
-  }
-}
 
 export async function build(titleSlug: string, client: Client) {
   const project = new Project(titleSlug, client)
